@@ -2,6 +2,25 @@ function isValidMonth(value) {
   return /^\d{4}-(0[1-9]|1[0-2])$/.test(value);
 }
 
+function escapeCsv(value) {
+  const text = String(value ?? "");
+  return /[",\r\n]/.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+export function toCsv(expenses) {
+  const rows = [
+    ["id", "date", "category", "amount", "note"],
+    ...expenses.map(({ id, date, category, amount, note }) => [
+      id,
+      date,
+      category,
+      amount,
+      note,
+    ]),
+  ];
+  return `${rows.map((row) => row.map(escapeCsv).join(",")).join("\r\n")}\r\n`;
+}
+
 export function createSummary(expenses, { month, budget } = {}) {
   if (month !== undefined && (typeof month !== "string" || !isValidMonth(month))) {
     throw new Error("Month must be in YYYY-MM format.");

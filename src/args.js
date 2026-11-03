@@ -1,4 +1,15 @@
-const VALUE_OPTIONS = new Set(["amount", "category", "note", "date", "month", "id", "set"]);
+const VALUE_OPTIONS = new Set([
+  "amount",
+  "category",
+  "note",
+  "date",
+  "month",
+  "id",
+  "set",
+  "format",
+  "out",
+  "file",
+]);
 const COMMAND_OPTIONS = {
   add: new Set(["amount", "category", "note", "date"]),
   list: new Set(["category", "month"]),
@@ -6,6 +17,8 @@ const COMMAND_OPTIONS = {
   edit: new Set(["id", "amount", "category", "note", "date"]),
   summary: new Set(["month"]),
   budget: new Set(["set"]),
+  export: new Set(["format", "out"]),
+  import: new Set(["file"]),
   help: new Set(),
 };
 
@@ -20,6 +33,13 @@ export function parseArgs(argv) {
     }
 
     const name = argument.slice(2);
+    if (name === "no-color") {
+      if (options.noColor) {
+        throw new Error("Option --no-color was provided more than once.");
+      }
+      options.noColor = true;
+      continue;
+    }
     if (!VALUE_OPTIONS.has(name)) {
       throw new Error(`Unknown option: ${argument}`);
     }
@@ -38,5 +58,5 @@ export function parseArgs(argv) {
     index += 1;
   }
 
-  return { command, options };
+  return { command, options, noColor: options.noColor ?? false };
 }
