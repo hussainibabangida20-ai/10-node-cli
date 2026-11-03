@@ -2,6 +2,12 @@
   "name": "node-cli-expense-tracker",
   "private": true,
   "type": "module",
+  "bin": {
+    "expense": "./bin/expense.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
   "engines": {
     "node": ">=20"
   }
