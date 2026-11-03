@@ -1,7 +1,11 @@
-const VALUE_OPTIONS = new Set(["amount", "category", "note", "date", "month"]);
+const VALUE_OPTIONS = new Set(["amount", "category", "note", "date", "month", "id", "set"]);
 const COMMAND_OPTIONS = {
   add: new Set(["amount", "category", "note", "date"]),
   list: new Set(["category", "month"]),
+  delete: new Set(["id"]),
+  edit: new Set(["id", "amount", "category", "note", "date"]),
+  summary: new Set(["month"]),
+  budget: new Set(["set"]),
   help: new Set(),
 };
 
